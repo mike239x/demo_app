@@ -1,0 +1,14 @@
+name: main pipeline
+run-name: run triggered by ${{ github.actor }}
+on:
+  push:
+    branches:
+      - main
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v5
+      - run: echo hello from the container
+      - run: python --version
