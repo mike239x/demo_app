@@ -15,5 +15,7 @@ For testing, `pytest` is used:
 ```
 uv run pytest
 ```
-
-
+You can also create your own HTML report:
+```
+uv run pytest --html=pytest_report.html --self-contained-html
+```

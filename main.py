@@ -2,7 +2,6 @@ from fastapi import FastAPI
 
 app = FastAPI(title="Demo App")
 
-
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
