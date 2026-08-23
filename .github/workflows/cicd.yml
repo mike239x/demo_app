@@ -8,11 +8,16 @@ jobs:
   test-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6.1.0
-      - uses: actions/setup-python@v6.3.0
-      - uses: astral-sh/setup-uv@v10.0.0
+      - name: Checkout the repo 
+        uses: actions/checkout@v6.1.0
+      - name: Setup python
+        uses: actions/setup-python@v6.3.0
+      - name: Setup UV
+        uses: astral-sh/setup-uv@v10.0.0
         with:
           version: "0.12.5"
           enable-cache: true
-      - uses: astral-sh/ruff-action@v4.1.0
-      - run: uv sync --locked --all-extras --dev
+      - name: Run code linter
+        uses: astral-sh/ruff-action@v4.1.0
+      - name: Install dependencies
+        run: uv sync --locked --all-extras --dev
