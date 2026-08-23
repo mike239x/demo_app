@@ -24,8 +24,9 @@ jobs:
       - name: Run tests # TODO: add report to the job summary
         run: uv run pytest --html=pytest_report.html --self-contained-html
       - name: Upload pytest test results
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@v7.0.1
         with:
           name: pytest-results
           path: pytest_report.html
+          archive: false 
         if: ${{ always() }}
