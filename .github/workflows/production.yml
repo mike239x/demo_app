@@ -1,5 +1,5 @@
 name: staging
-run-name: tagged by ${{ github.actor }}
+run-name: release created by ${{ github.actor }}
 on:
   release:
     types: [released]
