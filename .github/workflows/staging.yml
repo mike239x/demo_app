@@ -7,8 +7,8 @@ on:
     tags:        
       - 'v*'
 jobs:
-  environment: staging
   test-and-deploy:
+    environment: staging
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repo 
