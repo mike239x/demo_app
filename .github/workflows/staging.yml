@@ -2,10 +2,8 @@ name: staging
 run-name: tagged by ${{ github.actor }}
 on:
   push:
-    branches:
-      - main
     tags:        
-      - 'v*'
+      - 'v**'
 jobs:
   test-other-python-versions:
     environment: staging
