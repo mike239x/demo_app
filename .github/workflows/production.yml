@@ -1,14 +1,11 @@
 name: staging
 run-name: tagged by ${{ github.actor }}
 on:
-  push:
-    branches:
-      - main
-    tags:        
-      - 'v*'
+  release:
+    types: [released]
 jobs:
   test-and-deploy:
-    environment: staging
+    environment: production
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repo 
