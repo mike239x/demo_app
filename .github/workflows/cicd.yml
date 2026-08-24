@@ -31,7 +31,7 @@ jobs:
           archive: false
         if: ${{ always() }}
       - name: Build docker image
-        run: docker build -f app.dockerfile -t mike239x/demo_app --attest type=provenance,mode=max,version=v1 .
+        run: docker build -f app.dockerfile -t mike239x/demo_app .
       - name: Generate SBOM
         run: docker scout sbom --format list mike239x/demo_app > SBOM.txt
       - name: Store SBOM
