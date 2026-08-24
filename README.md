@@ -44,3 +44,9 @@ docker container run -p 8000:8000/tcp --rm -ti mike239x/demo_app
 - security gates?
 - replace deployment to FastAPI with something that uses docker image we created
 - add test report to the job summary
+
+
+# Things that didn't work
+
+- docker build with attestation
+- docker scout
