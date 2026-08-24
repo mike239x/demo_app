@@ -7,7 +7,15 @@ on:
     tags:        
       - 'v*'
 jobs:
-  test-and-deploy:
+  test-other-python-versions:
+    environment: staging
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repo 
+        uses: actions/checkout@v6.1.0
+      - name: Say hello
+        run: echo hello
+  tag-docker-image:
     environment: staging
     runs-on: ubuntu-latest
     steps:

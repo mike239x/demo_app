@@ -1,11 +1,11 @@
-name: main pipeline
+name: dev
 run-name: run triggered by ${{ github.actor }}
 on:
   push:
     branches:
       - main
 jobs:
-  test-and-deploy:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repo 
@@ -30,6 +30,17 @@ jobs:
           path: pytest_report.html
           archive: false
         if: ${{ always() }}
+      - name: Caching venv
+        uses: actions/cache@v6.1.0
+        with:
+          path: .venv
+          key: venv
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v6.1.0
       - name: Build docker image
         run: docker build -f app.dockerfile -t mike239x/demo_app .
       - name: Generate SBOM
@@ -40,6 +51,24 @@ jobs:
         run: |
           docker login -u mike239x -p ${{ secrets.DOCKER_PASSWORD }}
           docker image push mike239x/demo_app
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v6.1.0
+      - name: Setup python
+        uses: actions/setup-python@v6.3.0
+      - name: Setup UV
+        uses: astral-sh/setup-uv@v10.0.0
+        with:
+          version: "0.12.5"
+          enable-cache: true
+      - name: Caching venv
+        uses: actions/cache@v6.1.0
+        with:
+          path: .venv
+          key: venv
       - name: Deploy to FastAPI Cloud
         run: uv run fastapi deploy
         env:

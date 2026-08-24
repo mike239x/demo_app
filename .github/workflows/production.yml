@@ -1,4 +1,4 @@
-name: staging
+name: production
 run-name: release created by ${{ github.actor }}
 on:
   release:
@@ -12,3 +12,29 @@ jobs:
         uses: actions/checkout@v6.1.0
       - name: Say hello
         run: echo hello
+
+
+# on the off-chance I show this file during the interview, here's a cool ascii art I found
+
+#                           ?
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~|^"~~~~~~~~~~~~~~~~~~~~~~~~~o~~~~~~~~~~~
+#       o                   |                  o      __o
+#        o                  |                 o     |X__>
+#      ___o                 |                __o
+#    (X___>--             __|__            |X__>     o
+#                        |     \                   __o
+#                        |      \                |X__>
+# _______________________|_______\________________
+#<                                                \____________   _
+# \                                                            \ (_)
+#  \    O       O       O                                       >=)
+#   \__________________________________________________________/ (_)
+#                           ___
+#                          / o \
+#                     __   \   /   _
+#                       \__/ | \__/ \
+#                      \___//|\\___/\
+#                       ___/ | \___
+#                            |     \
+#                           /
+#------------------------------------------------
