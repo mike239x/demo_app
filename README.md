@@ -41,8 +41,8 @@ docker container run -p 8000:8000/tcp --rm -ti mike239x/demo_app
 
 - add environments - dev/staging/prod
 - add matrix builds
-- separate job steps into jobs so the overview looks better
 - SBOM
 - image vulnerability
 - security gates?
 - replace deployment to FastAPI with something that uses docker image we created
+- add test report to the job summary

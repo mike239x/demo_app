@@ -1,9 +1,11 @@
 name: main pipeline
-run-name: run triggered by ${{ github.actor }}
+run-name: tagged by ${{ github.actor }}
 on:
   push:
     branches:
       - main
+    tags:        
+      - 'v*'
 jobs:
   test-and-deploy:
     runs-on: ubuntu-latest
@@ -30,18 +32,3 @@ jobs:
           path: pytest_report.html
           archive: false
         if: ${{ always() }}
-      - name: Build docker image
-        run: docker build -f app.dockerfile -t mike239x/demo_app .
-      - name: Generate SBOM
-        uses: anchore/sbom-action@v0
-        with:
-          image: mike239x/demo_app
-      - name: Push docker image
-        run: |
-          docker login -u mike239x -p ${{ secrets.DOCKER_PASSWORD }}
-          docker image push mike239x/demo_app
-      - name: Deploy to FastAPI Cloud
-        run: uv run fastapi deploy
-        env:
-          FASTAPI_CLOUD_TOKEN: ${{ secrets.FASTAPI_CLOUD_TOKEN }}
-          FASTAPI_CLOUD_APP_ID: ${{ secrets.FASTAPI_CLOUD_APP_ID }}
