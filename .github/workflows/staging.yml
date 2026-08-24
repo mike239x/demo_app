@@ -1,4 +1,4 @@
-name: main pipeline
+name: staging
 run-name: tagged by ${{ github.actor }}
 on:
   push:
@@ -7,6 +7,7 @@ on:
     tags:        
       - 'v*'
 jobs:
+  environment: staging
   test-and-deploy:
     runs-on: ubuntu-latest
     steps:
