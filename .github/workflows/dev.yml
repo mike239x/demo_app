@@ -26,7 +26,6 @@ jobs:
       - name: Store pytest test results
         uses: actions/upload-artifact@v7.0.1
         with:
-          name: pytest-results
           path: pytest_report.html
           archive: false
         if: ${{ always() }}

@@ -10,11 +10,42 @@ jobs:
   test-other-python-versions:
     environment: staging
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12", "3.13", "3.14"]
+
     steps:
       - name: Checkout the repo 
         uses: actions/checkout@v6.1.0
-      - name: Say hello
-        run: echo hello
+      - name: Setup python ${{ matrix.python-version }}
+        uses: actions/setup-python@v6.3.0
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Setup UV
+        uses: astral-sh/setup-uv@v10.0.0
+        with:
+          version: "0.12.5"
+          enable-cache: false
+          python-version: ${{ matrix.python-version }}
+      - name: Setup UV some more
+        run: |
+          echo hi > .python-version
+          rm uv.lock
+          uv sync --all-extras --dev
+      - name: Run tests
+        run: uv run pytest --html=pytest_report_${{ matrix.python-version }}.html --self-contained-html
+      - name: Store pytest test results
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          path: pytest_report_${{ matrix.python-version }}.html
+          archive: false
+        if: ${{ always() }}
+      - name: Caching venv
+        uses: actions/cache@v6.1.0
+        with:
+          path: .venv
+          key: venv
+
   tag-docker-image:
     environment: staging
     runs-on: ubuntu-latest
