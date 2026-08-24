@@ -23,7 +23,7 @@ jobs:
         run: uv sync --locked --all-extras --dev
       - name: Run tests # TODO: add report to the job summary
         run: uv run pytest --html=pytest_report.html --self-contained-html
-      - name: Upload pytest test results
+      - name: Store pytest test results
         uses: actions/upload-artifact@v7.0.1
         with:
           name: pytest-results
@@ -31,7 +31,17 @@ jobs:
           archive: false
         if: ${{ always() }}
       - name: Build docker image
-        run: docker build -f app.dockerfile -t mike239x/demo_app .
+        run: docker build -f app.dockerfile -t mike239x/demo_app --attest type=provenance,mode=max,version=v1 .
+      - name: Generate SBOM
+        run: docker scout sbom --format list mike239x/demo_app > SBOM.txt
+      - name: Store SBOM
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          name: SBOM
+          path: SBOM.txt
+          archive: false
+      - name: Collect image vulnerabilities
+        run: docker scout quickview mike239x/demo_app
       - name: Push docker image
         run: |
           docker login -u mike239x -p ${{ secrets.DOCKER_PASSWORD }}
