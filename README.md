@@ -48,3 +48,5 @@ docker container run -p 8000:8000/tcp --rm -ti mike239x/demo_app
 
 - docker build with attestation
 - docker scout
+- it appears a single `git push --tags` with both commits and a new tag only triggers one workflow (the staging one)
+  not sure how to fix this currently
