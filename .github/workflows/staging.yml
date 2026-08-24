@@ -5,10 +5,6 @@ on:
     tags:        
       - v**
 
-## GITHUB_TOKEN auth
-permissions:
-  contents: write
-
 jobs:
 
   test-other-python-versions:
@@ -72,13 +68,9 @@ jobs:
           archive: false
         if: ${{ always() }}
       - name: Generate SBOM
-        uses: aquasecurity/trivy-action@v0.36.0
+        uses: anchore/sbom-action@v0
         with:
-          scan-type: 'fs'
-          format: 'github'
-          output: 'dependency-results.sbom.json'
-          scan-ref: '.'
-          github-pat: ${{ secrets.GITHUB_TOKEN }}
+          image: mike239x/demo_app
       - name: Push docker image
         run: |
           docker login -u mike239x -p ${{ secrets.DOCKER_PASSWORD }}
