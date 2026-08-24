@@ -30,6 +30,12 @@ jobs:
           path: pytest_report.html
           archive: false
         if: ${{ always() }}
+      - name: Build docker image
+        run: docker build -f app.dockerfile -t mike239x/demo_app .
+      - name: Push docker image
+        run: |
+          docker login -u mike239x -p ${{ secrets.DOCKER_PASSWORD }}
+          docker image push mike239x/demo_app
       - name: Deploy to FastAPI Cloud
         run: uv run fastapi deploy
         env:
