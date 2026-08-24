@@ -33,7 +33,7 @@ jobs:
       - name: Build docker image
         run: docker build -f app.dockerfile -t mike239x/demo_app .
       - name: Generate SBOM
-        run: docker scout sbom --format list mike239x/demo_app > SBOM.txt
+        run: docker scout sbom mike239x/demo_app > SBOM.json
       - name: Store SBOM
         uses: actions/upload-artifact@v7.0.1
         with:
