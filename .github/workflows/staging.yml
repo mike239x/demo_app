@@ -79,6 +79,7 @@ jobs:
 
   deploy:
     needs: tag-docker-image
+    environment: staging
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repo
