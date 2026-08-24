@@ -6,7 +6,7 @@ on:
       - main
 jobs:
   test-and-deploy:
-    runs-on: ubuntu-latest
+    runs-on: docker
     steps:
       - name: Checkout the repo 
         uses: actions/checkout@v6.1.0
@@ -38,7 +38,7 @@ jobs:
         uses: actions/upload-artifact@v7.0.1
         with:
           name: SBOM
-          path: SBOM.txt
+          path: SBOM.json
           archive: false
       - name: Collect image vulnerabilities
         run: docker scout quickview mike239x/demo_app
