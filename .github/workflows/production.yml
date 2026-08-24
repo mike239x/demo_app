@@ -3,7 +3,9 @@ run-name: release created by ${{ github.actor }}
 on:
   release:
     types: [released]
+
 jobs:
+
   test-and-deploy:
     environment: production
     runs-on: ubuntu-latest

@@ -3,15 +3,16 @@ run-name: tagged by ${{ github.actor }}
 on:
   push:
     tags:        
-      - 'v**'
+      - v**
+
 jobs:
+
   test-other-python-versions:
     environment: staging
     runs-on: ubuntu-latest
     strategy:
       matrix:
         python-version: ["3.11", "3.12", "3.13", "3.14"]
-
     steps:
       - name: Checkout the repo 
         uses: actions/checkout@v6.1.0
@@ -62,3 +63,16 @@ jobs:
           docker login -u mike239x -p ${{ secrets.DOCKER_PASSWORD }}
           docker tag mike239x/demo_app mike239x/demo_app:${{ github.ref_name }}
           docker push mike239x/demo_app:${{ github.ref_name }}
+
+  deploy:
+    needs: tag-docker-image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v6.1.0
+      - run: echo hi there
+#      - name: Deploy to FastAPI Cloud
+#        run: uv run fastapi deploy
+#        env:
+#          FASTAPI_CLOUD_TOKEN: ${{ secrets.FASTAPI_CLOUD_TOKEN }}
+#          FASTAPI_CLOUD_APP_ID: ${{ secrets.FASTAPI_CLOUD_APP_ID }}
