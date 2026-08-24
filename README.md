@@ -39,7 +39,6 @@ docker container run -p 8000:8000/tcp --rm -ti mike239x/demo_app
 
 # TODOs
 
-- image vulnerability?
 - security gates?
 - replace deployment to FastAPI with something that uses docker image we created
 - add test report to the job summary
