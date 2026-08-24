@@ -83,9 +83,20 @@ jobs:
     steps:
       - name: Checkout the repo
         uses: actions/checkout@v6.1.0
-      - run: echo hi there
-#      - name: Deploy to FastAPI Cloud
-#        run: uv run fastapi deploy
-#        env:
-#          FASTAPI_CLOUD_TOKEN: ${{ secrets.FASTAPI_CLOUD_TOKEN }}
-#          FASTAPI_CLOUD_APP_ID: ${{ secrets.FASTAPI_CLOUD_APP_ID }}
+      - name: Setup python
+        uses: actions/setup-python@v6.3.0
+      - name: Setup UV
+        uses: astral-sh/setup-uv@v10.0.0
+        with:
+          version: "0.12.5"
+          enable-cache: true
+      - name: Caching venv
+        uses: actions/cache@v6.1.0
+        with:
+          path: .venv
+          key: venv
+      - name: Deploy to FastAPI Cloud
+        run: uv run fastapi deploy
+        env:
+          FASTAPI_CLOUD_TOKEN: ${{ secrets.FASTAPI_CLOUD_TOKEN }}
+          FASTAPI_CLOUD_APP_ID: ${{ secrets.FASTAPI_CLOUD_APP_ID }}
