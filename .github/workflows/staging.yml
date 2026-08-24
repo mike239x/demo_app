@@ -47,10 +47,20 @@ jobs:
           key: venv
 
   tag-docker-image:
+    needs: test-other-python-versions
     environment: staging
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repo 
         uses: actions/checkout@v6.1.0
-      - name: Say hello
-        run: echo hello
+      - name: Build docker image
+        run: docker build -f app.dockerfile -t mike239x/demo_app .
+      - name: Generate SBOM
+        uses: anchore/sbom-action@v0
+        with:
+          image: mike239x/demo_app
+      - name: Push docker image
+        run: |
+          docker login -u mike239x -p ${{ secrets.DOCKER_PASSWORD }}
+          docker tag mike239x/demo_app mike239x/demo_app:${{ github.ref_name }}
+          docker push mike239x/demo_app:${{ github.ref_name }}
