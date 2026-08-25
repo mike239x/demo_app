@@ -2,7 +2,7 @@ name: staging
 run-name: tagged by ${{ github.actor }}
 on:
   push:
-    tags:        
+    tags:
       - v**
 
 jobs:
@@ -28,7 +28,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Setup UV some more
         run: |
-          echo hi > .python-version
+          echo ${{ matrix.python-version }} > .python-version
           rm uv.lock
           uv sync --all-extras --dev
       - name: Run tests
