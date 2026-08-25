@@ -6,7 +6,12 @@ on:
 
 jobs:
 
+  get-confirmation:
+    environment: production_confirm
+    runs-on: ubuntu-latest
+
   deploy:
+    needs: get-confirmation
     environment: production
     runs-on: ubuntu-latest
     steps:

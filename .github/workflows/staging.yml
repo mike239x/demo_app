@@ -7,7 +7,12 @@ on:
 
 jobs:
 
+  get-confirmation:
+    environment: staging_confirm
+    runs-on: ubuntu-latest
+
   test-other-python-versions:
+    needs: get-confirmation
     environment: staging
     runs-on: ubuntu-latest
     strategy:
