@@ -10,6 +10,9 @@ jobs:
   get-confirmation:
     environment: staging_confirm
     runs-on: ubuntu-latest
+    steps:
+      - name: Corfirmation recieved
+        runs: echo OK
 
   test-other-python-versions:
     needs: get-confirmation

@@ -9,6 +9,9 @@ jobs:
   get-confirmation:
     environment: production_confirm
     runs-on: ubuntu-latest
+    steps:
+      - name: Corfirmation recieved
+        runs: echo OK
 
   deploy:
     needs: get-confirmation
