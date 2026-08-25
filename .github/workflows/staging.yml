@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Corfirmation recieved
-        runs: echo OK
+        run: echo OK 
 
   test-other-python-versions:
     needs: get-confirmation

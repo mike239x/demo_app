@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Corfirmation recieved
-        runs: echo OK
+        run: echo OK
 
   deploy:
     needs: get-confirmation
